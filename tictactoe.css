@@ -1,0 +1,25 @@
+body {
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.box {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}

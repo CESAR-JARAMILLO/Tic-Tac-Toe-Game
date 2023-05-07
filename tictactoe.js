@@ -1,4 +1,5 @@
 const boxes = document.querySelectorAll('.box');
+const button = document.querySelector('.restart-button');
 
 const players = {
   playerOne: {
@@ -39,11 +40,13 @@ function checkForWinner(player) {
     let isWinner = combo.every(index => currentPlayerBoxes.includes(index));
 
     if (isWinner) {
-      console.log(`Player ${player} has won!`);
+      // console.log(`Player ${player} has won!`);
       if (player === "X") {
         players.playerOne.setWinner();
+        console.log(`${players.playerOne.name} has won!`);
       } else {
         players.playerTwo.setWinner();
+        console.log(`${players.playerTwo.name} has won!`);
       }
       return true;
     }
@@ -51,6 +54,7 @@ function checkForWinner(player) {
 
   if (players.playerOne.playerOneBoxes.length + players.playerTwo.playerTwoBoxes.length === 9) {
     console.log("It's a tie!");
+    button.style.display = 'block';
     return true;
   }
 
@@ -63,6 +67,7 @@ function selectBox(box) {
     players.playerOne.playerOneBoxes.push(Array.from(boxes).indexOf(box));
     if (checkForWinner("X")) {
       disableBoxes();
+      button.style.display = 'block';
       return;
     }
     counter++;
@@ -71,11 +76,31 @@ function selectBox(box) {
     players.playerTwo.playerTwoBoxes.push(Array.from(boxes).indexOf(box));
     if (checkForWinner("O")) {
       disableBoxes();
+      button.style.display = 'block';
       return;
     }
     counter++;
   }
 }
+
+
+const handleGameReset = () => {
+  counter = 0;
+  players.playerOne.isWinner = false;
+  players.playerTwo.isWinner = false;
+  players.playerOne.playerOneBoxes = [];
+  players.playerTwo.playerTwoBoxes = [];
+  button.style.display = 'none';
+  boxes.forEach(box => {
+    box.innerHTML = '';
+    box.addEventListener('click', handleBoxClick); // add event listener back
+  });
+};
+
+
+
+
+button.addEventListener('click', handleGameReset)
 
 function disableBoxes() {
   boxes.forEach(box => {
